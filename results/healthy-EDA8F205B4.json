@@ -1,0 +1,49 @@
+{
+  "run_id": "EDA8F205B4",
+  "executed_at": "2026-10-03T13:35:36.592477+00:00",
+  "scenario": "Real agent: healthy complaint creation",
+  "model": "gemini-3.8-flash",
+  "customer_id": "CUS-501",
+  "payment_id": "PAY-HEALTHY-AUTO-EDA8F205B4",
+  "agent_final_message": "Your payment-dispute complaint has been successfully created.\n\n**Complaint Details:**\n- **Complaint ID:** CMP-1317A99AA925\n- **Status:** OPEN\n- **Customer ID:** CUS-501\n- **Payment ID:** PAY-HEALTHY-AUTO-EDA8F205B4\n- **Reason:** Payment was debited, but the merchant did not receive it.\n- **Created At:** 2026-10-03T13:35:07.771275Z",
+  "tool_execution": {
+    "tool_name": "create_payment_dispute",
+    "request": {
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-HEALTHY-AUTO-EDA8F205B4",
+      "reason": "Payment was debited, but the merchant did not receive it."
+    },
+    "http_status": 201,
+    "response": {
+      "complaint_id": "CMP-1317A99AA925",
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-HEALTHY-AUTO-EDA8F205B4",
+      "reason": "Payment was debited, but the merchant did not receive it.",
+      "status": "OPEN",
+      "created_at": "2026-10-03T13:35:07.771275Z"
+    }
+  },
+  "verification": {
+    "verdict": "PASS",
+    "customer_id": "CUS-501",
+    "payment_id": "PAY-HEALTHY-AUTO-EDA8F205B4",
+    "expected_count": 1,
+    "actual_count": 1,
+    "complaints": [
+      {
+        "complaint_id": "CMP-1317A99AA925",
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-HEALTHY-AUTO-EDA8F205B4",
+        "reason": "Payment was debited, but the merchant did not receive it.",
+        "status": "OPEN",
+        "created_at": "2026-10-03T13:35:07.771275+00:00"
+      }
+    ]
+  },
+  "comparison": {
+    "response_success_check_passed": true,
+    "tool_status_check_passed": true,
+    "stateassert_confirmed_success": true,
+    "stateassert_false_alarm": false
+  }
+}

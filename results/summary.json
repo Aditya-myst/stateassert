@@ -1,0 +1,99 @@
+{
+  "total_faulty_runs": 3,
+  "total_healthy_runs": 1,
+  "scenario_breakdown": {
+    "false_success": {
+      "name": "HTTP 200 without persistence",
+      "runs": 1,
+      "response_success_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "final_tool_status_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "complete_trace_error_clues": {
+        "runs": 0,
+        "total": 1
+      },
+      "stateassert": {
+        "detected": 1,
+        "total": 1
+      }
+    },
+    "wrong_customer": {
+      "name": "Complaint persisted under wrong customer",
+      "runs": 1,
+      "response_success_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "final_tool_status_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "complete_trace_error_clues": {
+        "runs": 0,
+        "total": 1
+      },
+      "stateassert": {
+        "detected": 1,
+        "total": 1
+      }
+    },
+    "timeout_duplicate": {
+      "name": "Timeout after commit followed by unsafe retry",
+      "runs": 1,
+      "response_success_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "final_tool_status_check": {
+        "detected": 0,
+        "total": 1
+      },
+      "complete_trace_error_clues": {
+        "runs": 1,
+        "total": 1
+      },
+      "stateassert": {
+        "detected": 1,
+        "total": 1
+      }
+    }
+  },
+  "overall_fault_detection": {
+    "response_success_check": {
+      "detected": 0,
+      "total": 3,
+      "rate_percent": 0.0
+    },
+    "final_tool_status_check": {
+      "detected": 0,
+      "total": 3,
+      "rate_percent": 0.0
+    },
+    "complete_trace_error_clues": {
+      "runs": 1,
+      "total": 3
+    },
+    "stateassert": {
+      "detected": 3,
+      "total": 3,
+      "rate_percent": 100.0
+    }
+  },
+  "healthy_controls": {
+    "false_alarms": 0,
+    "total": 1,
+    "false_alarm_rate_percent": 0.0
+  },
+  "limitations": [
+    "Synthetic sandbox evidence only.",
+    "One saved run per scenario.",
+    "Response check is deterministic, not an AI judge.",
+    "A complete tool trace exposed a timeout clue in one run.",
+    "These results are not customer or market validation."
+  ]
+}

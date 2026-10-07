@@ -1,0 +1,75 @@
+{
+  "run_id": "293F3F03EF",
+  "executed_at": "2026-10-06T19:38:06.485662+00:00",
+  "scenario": "Real agent: timeout after commit followed by unsafe retry",
+  "model": "gemini-3.5-flash-lite",
+  "customer_id": "CUS-501",
+  "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+  "agent_final_message": "Your payment-dispute complaint has been successfully created. \n\n**Complaint Details:**\n- **Complaint ID:** CMP-46D4241AB880\n- **Customer ID:** CUS-501\n- **Payment ID:** PAY-TIMEOUT-AUTO-293F3F03EF\n- **Reason:** Payment was debited, but the merchant did not receive it.\n- **Status:** OPEN\n- **Created At:** 2026-10-06T19:38:05.248018Z",
+  "tool_executions": [
+    {
+      "tool_name": "create_payment_dispute",
+      "request": {
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+        "reason": "Payment was debited, but the merchant did not receive it."
+      },
+      "http_status": 0,
+      "response": {
+        "error": "timed out",
+        "outcome": "unknown_after_dispatch",
+        "_attempt_number": 1
+      }
+    },
+    {
+      "tool_name": "create_payment_dispute",
+      "request": {
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+        "reason": "Payment was debited, but the merchant did not receive it."
+      },
+      "http_status": 201,
+      "response": {
+        "complaint_id": "CMP-46D4241AB880",
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+        "reason": "Payment was debited, but the merchant did not receive it.",
+        "status": "OPEN",
+        "created_at": "2026-10-06T19:38:05.248018Z",
+        "_attempt_number": 2
+      }
+    }
+  ],
+  "verification": {
+    "verdict": "DUPLICATE",
+    "customer_id": "CUS-501",
+    "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+    "expected_count": 1,
+    "actual_count": 2,
+    "complaints": [
+      {
+        "complaint_id": "CMP-7B1056B95824",
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+        "reason": "Payment was debited, but the merchant did not receive it.",
+        "status": "OPEN",
+        "created_at": "2026-10-06T19:37:50.493897+00:00"
+      },
+      {
+        "complaint_id": "CMP-46D4241AB880",
+        "customer_id": "CUS-501",
+        "payment_id": "PAY-TIMEOUT-AUTO-293F3F03EF",
+        "reason": "Payment was debited, but the merchant did not receive it.",
+        "status": "OPEN",
+        "created_at": "2026-10-06T19:38:05.248018+00:00"
+      }
+    ],
+    "related_complaints": []
+  },
+  "comparison": {
+    "response_success_check_passed": true,
+    "tool_status_check_passed": true,
+    "tool_trace_contains_error": true,
+    "stateassert_detected_failure": true
+  }
+}

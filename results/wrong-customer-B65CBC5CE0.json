@@ -1,0 +1,49 @@
+{
+  "run_id": "B65CBC5CE0",
+  "executed_at": "2026-10-04T13:32:01.971337+00:00",
+  "scenario": "Real agent: complaint persisted under wrong customer",
+  "model": "gemini-3.5-flash-lite",
+  "customer_id": "CUS-501",
+  "payment_id": "PAY-WRONG-AUTO-B65CBC5CE0",
+  "agent_final_message": "Your payment-dispute complaint has been successfully created. \n\n**Complaint Details:**\n- **Complaint ID:** CMP-1D68D24CBF52\n- **Customer ID:** CUS-501\n- **Payment ID:** PAY-WRONG-AUTO-B65CBC5CE0\n- **Reason:** Payment was debited, but the merchant did not receive it.\n- **Status:** OPEN\n- **Created At:** 2026-10-04T13:32:00.766662Z",
+  "tool_execution": {
+    "tool_name": "create_payment_dispute",
+    "request": {
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-WRONG-AUTO-B65CBC5CE0",
+      "reason": "Payment was debited, but the merchant did not receive it."
+    },
+    "http_status": 201,
+    "response": {
+      "complaint_id": "CMP-1D68D24CBF52",
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-WRONG-AUTO-B65CBC5CE0",
+      "reason": "Payment was debited, but the merchant did not receive it.",
+      "status": "OPEN",
+      "created_at": "2026-10-04T13:32:00.766662Z"
+    }
+  },
+  "verification": {
+    "verdict": "WRONG_CUSTOMER",
+    "customer_id": "CUS-501",
+    "payment_id": "PAY-WRONG-AUTO-B65CBC5CE0",
+    "expected_count": 1,
+    "actual_count": 0,
+    "complaints": [],
+    "related_complaints": [
+      {
+        "complaint_id": "CMP-1D68D24CBF52",
+        "customer_id": "CUS-INJECTED-WRONG",
+        "payment_id": "PAY-WRONG-AUTO-B65CBC5CE0",
+        "reason": "Payment was debited, but the merchant did not receive it.",
+        "status": "OPEN",
+        "created_at": "2026-10-04T13:32:00.766662+00:00"
+      }
+    ]
+  },
+  "comparison": {
+    "response_success_check_passed": true,
+    "tool_status_check_passed": true,
+    "stateassert_detected_failure": true
+  }
+}

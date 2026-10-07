@@ -1,0 +1,520 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StateAssert Evidence Report</title>
+<style>
+:root {
+    --navy: #101828;
+    --blue: #155eef;
+    --blue-light: #eff4ff;
+    --green: #067647;
+    --green-light: #ecfdf3;
+    --red: #b42318;
+    --surface: #ffffff;
+    --background: #f2f4f7;
+    --border: #d0d5dd;
+    --muted: #667085;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    color: var(--navy);
+    background: var(--background);
+    font-family: Inter, Arial, sans-serif;
+    line-height: 1.5;
+}
+header {
+    color: white;
+    padding: 54px 7%;
+    background: linear-gradient(135deg, #101828, #1849a9);
+}
+header h1 {
+    margin: 0 0 10px;
+    font-size: 42px;
+}
+header p {
+    max-width: 760px;
+    margin: 0;
+    color: #d1e0ff;
+    font-size: 18px;
+}
+main {
+    width: min(1180px, 92%);
+    margin: -24px auto 60px;
+}
+.panel, .evidence-card {
+    margin-bottom: 24px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(16,24,40,.06);
+}
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+.metric {
+    padding: 20px;
+    background: var(--blue-light);
+    border-radius: 12px;
+}
+.metric span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+}
+.metric strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--blue);
+    font-size: 30px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+th {
+    color: var(--muted);
+    font-size: 13px;
+}
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.card-heading h2 {
+    margin: 6px 0 0;
+}
+.scenario-label {
+    color: var(--blue);
+    font-weight: 700;
+}
+.verdict {
+    height: fit-content;
+    padding: 8px 12px;
+    color: var(--green);
+    background: var(--green-light);
+    border-radius: 999px;
+    font-weight: 700;
+}
+.metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 18px 0;
+    color: var(--muted);
+}
+blockquote {
+    margin: 10px 0 24px;
+    padding: 18px;
+    background: #f9fafb;
+    border-left: 4px solid var(--blue);
+}
+.outcome-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 22px;
+}
+.outcome-grid div {
+    padding: 16px;
+    background: #f9fafb;
+    border-radius: 10px;
+}
+.outcome-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+}
+.outcome-grid strong {
+    display: block;
+    margin-top: 6px;
+}
+.warning {
+    border-left: 5px solid #f79009;
+}
+code {
+    word-break: break-word;
+    white-space: normal;
+}
+footer {
+    padding: 28px;
+    color: var(--muted);
+    text-align: center;
+}
+@media (max-width: 800px) {
+    .metrics, .outcome-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>StateAssert</h1>
+    <p>
+        The AI said it worked. StateAssert checked what actually
+        changed in authoritative business state.
+    </p>
+</header>
+<main>
+
+<section class="panel">
+    <h2>Controlled experiment summary</h2>
+    <div class="metrics">
+        <div class="metric">
+            <span>Injected faulty runs</span>
+            <strong>3</strong>
+        </div>
+        <div class="metric">
+            <span>StateAssert detections</span>
+            <strong>3/3</strong>
+        </div>
+        <div class="metric">
+            <span>Healthy false alarms</span>
+            <strong>0/1</strong>
+        </div>
+        <div class="metric">
+            <span>Trace error clues</span>
+            <strong>1/3</strong>
+        </div>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Baseline comparison</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Failures detected</th>
+                <th>What it checked</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Response-success check</td>
+                <td>0/3</td>
+                <td>Whether the final response claimed success</td>
+            </tr>
+            <tr>
+                <td>Final tool-status check</td>
+                <td>0/3</td>
+                <td>Whether the final tool attempt reported success</td>
+            </tr>
+            <tr>
+                <td>StateAssert</td>
+                <td>3/3</td>
+                <td>Fresh authoritative business state and forbidden effects</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section class="evidence-card">
+        <div class="card-heading">
+            <div>
+                <span class="scenario-label">False Success</span>
+                <h2>Real agent: HTTP 200 without persistence</h2>
+            </div>
+            <span class="verdict">MISSING</span>
+        </div>
+
+        <div class="metadata">
+            <span><strong>Run:</strong> 9451F41303</span>
+            <span><strong>Model:</strong> gemini-3.8-flash</span>
+            <span><strong>Payment:</strong> PAY-AGENT-AUTO-9451F41303</span>
+            <span><strong>Evidence:</strong> false-success-9451F41303.json</span>
+        </div>
+
+        <h3>Agent’s customer-facing claim</h3>
+        <blockquote>Your payment-dispute complaint has been successfully created.
+
+**Complaint Details:**
+- **Complaint ID:** CMP-D3FB9749E43F
+- **Customer ID:** CUS-501
+- **Payment ID:** PAY-AGENT-AUTO-9451F41303
+- **Reason:** Payment was debited, but the merchant did not receive it
+- **Status:** OPEN
+- **Created At:** 2026-10-03T13:17:51.643443+00:00</blockquote>
+
+        <h3>Tool attempts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attempt</th>
+                    <th>Tool</th>
+                    <th>HTTP status</th>
+                    <th>Response evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>1</td>
+                <td>create_payment_dispute</td>
+                <td>200</td>
+                <td><code>{&#x27;complaint_id&#x27;: &#x27;CMP-D3FB9749E43F&#x27;, &#x27;customer_id&#x27;: &#x27;CUS-501&#x27;, &#x27;payment_id&#x27;: &#x27;PAY-AGENT-AUTO-9451F41303&#x27;, &#x27;reason&#x27;: &#x27;Payment was debited, but the merchant did not receive it&#x27;, &#x27;status&#x27;: &#x27;OPEN&#x27;, &#x27;created_at&#x27;: &#x27;2026-10-03T13:17:51.643443+00:00&#x27;}</code></td>
+            </tr>
+            
+            </tbody>
+        </table>
+
+        <div class="outcome-grid">
+            <div>
+                <span>Expected effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>Matching effects</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>Related forbidden effects</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>StateAssert check</span>
+                <strong>Confirmed</strong>
+            </div>
+        </div>
+    </section>
+    
+    <section class="evidence-card">
+        <div class="card-heading">
+            <div>
+                <span class="scenario-label">Wrong Customer</span>
+                <h2>Real agent: complaint persisted under wrong customer</h2>
+            </div>
+            <span class="verdict">WRONG_CUSTOMER</span>
+        </div>
+
+        <div class="metadata">
+            <span><strong>Run:</strong> B65CBC5CE0</span>
+            <span><strong>Model:</strong> gemini-3.5-flash-lite</span>
+            <span><strong>Payment:</strong> PAY-WRONG-AUTO-B65CBC5CE0</span>
+            <span><strong>Evidence:</strong> wrong-customer-B65CBC5CE0.json</span>
+        </div>
+
+        <h3>Agent’s customer-facing claim</h3>
+        <blockquote>Your payment-dispute complaint has been successfully created. 
+
+**Complaint Details:**
+- **Complaint ID:** CMP-1D68D24CBF52
+- **Customer ID:** CUS-501
+- **Payment ID:** PAY-WRONG-AUTO-B65CBC5CE0
+- **Reason:** Payment was debited, but the merchant did not receive it.
+- **Status:** OPEN
+- **Created At:** 2026-10-04T13:32:00.766662Z</blockquote>
+
+        <h3>Tool attempts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attempt</th>
+                    <th>Tool</th>
+                    <th>HTTP status</th>
+                    <th>Response evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>1</td>
+                <td>create_payment_dispute</td>
+                <td>201</td>
+                <td><code>{&#x27;complaint_id&#x27;: &#x27;CMP-1D68D24CBF52&#x27;, &#x27;customer_id&#x27;: &#x27;CUS-501&#x27;, &#x27;payment_id&#x27;: &#x27;PAY-WRONG-AUTO-B65CBC5CE0&#x27;, &#x27;reason&#x27;: &#x27;Payment was debited, but the merchant did not receive it.&#x27;, &#x27;status&#x27;: &#x27;OPEN&#x27;, &#x27;created_at&#x27;: &#x27;2026-10-04T13:32:00.766662Z&#x27;}</code></td>
+            </tr>
+            
+            </tbody>
+        </table>
+
+        <div class="outcome-grid">
+            <div>
+                <span>Expected effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>Matching effects</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>Related forbidden effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>StateAssert check</span>
+                <strong>Confirmed</strong>
+            </div>
+        </div>
+    </section>
+    
+    <section class="evidence-card">
+        <div class="card-heading">
+            <div>
+                <span class="scenario-label">Timeout Duplicate</span>
+                <h2>Real agent: timeout after commit followed by unsafe retry</h2>
+            </div>
+            <span class="verdict">DUPLICATE</span>
+        </div>
+
+        <div class="metadata">
+            <span><strong>Run:</strong> 293F3F03EF</span>
+            <span><strong>Model:</strong> gemini-3.5-flash-lite</span>
+            <span><strong>Payment:</strong> PAY-TIMEOUT-AUTO-293F3F03EF</span>
+            <span><strong>Evidence:</strong> timeout-duplicate-293F3F03EF.json</span>
+        </div>
+
+        <h3>Agent’s customer-facing claim</h3>
+        <blockquote>Your payment-dispute complaint has been successfully created. 
+
+**Complaint Details:**
+- **Complaint ID:** CMP-46D4241AB880
+- **Customer ID:** CUS-501
+- **Payment ID:** PAY-TIMEOUT-AUTO-293F3F03EF
+- **Reason:** Payment was debited, but the merchant did not receive it.
+- **Status:** OPEN
+- **Created At:** 2026-10-06T19:38:05.248018Z</blockquote>
+
+        <h3>Tool attempts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attempt</th>
+                    <th>Tool</th>
+                    <th>HTTP status</th>
+                    <th>Response evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>1</td>
+                <td>create_payment_dispute</td>
+                <td>0</td>
+                <td><code>{&#x27;error&#x27;: &#x27;timed out&#x27;, &#x27;outcome&#x27;: &#x27;unknown_after_dispatch&#x27;, &#x27;_attempt_number&#x27;: 1}</code></td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>create_payment_dispute</td>
+                <td>201</td>
+                <td><code>{&#x27;complaint_id&#x27;: &#x27;CMP-46D4241AB880&#x27;, &#x27;customer_id&#x27;: &#x27;CUS-501&#x27;, &#x27;payment_id&#x27;: &#x27;PAY-TIMEOUT-AUTO-293F3F03EF&#x27;, &#x27;reason&#x27;: &#x27;Payment was debited, but the merchant did not receive it.&#x27;, &#x27;status&#x27;: &#x27;OPEN&#x27;, &#x27;created_at&#x27;: &#x27;2026-10-06T19:38:05.248018Z&#x27;, &#x27;_attempt_number&#x27;: 2}</code></td>
+            </tr>
+            
+            </tbody>
+        </table>
+
+        <div class="outcome-grid">
+            <div>
+                <span>Expected effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>Matching effects</span>
+                <strong>2</strong>
+            </div>
+            <div>
+                <span>Related forbidden effects</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>StateAssert check</span>
+                <strong>Confirmed</strong>
+            </div>
+        </div>
+    </section>
+    
+    <section class="evidence-card">
+        <div class="card-heading">
+            <div>
+                <span class="scenario-label">Healthy Control</span>
+                <h2>Real agent: healthy complaint creation</h2>
+            </div>
+            <span class="verdict">PASS</span>
+        </div>
+
+        <div class="metadata">
+            <span><strong>Run:</strong> EDA8F205B4</span>
+            <span><strong>Model:</strong> gemini-3.8-flash</span>
+            <span><strong>Payment:</strong> PAY-HEALTHY-AUTO-EDA8F205B4</span>
+            <span><strong>Evidence:</strong> healthy-EDA8F205B4.json</span>
+        </div>
+
+        <h3>Agent’s customer-facing claim</h3>
+        <blockquote>Your payment-dispute complaint has been successfully created.
+
+**Complaint Details:**
+- **Complaint ID:** CMP-1317A99AA925
+- **Status:** OPEN
+- **Customer ID:** CUS-501
+- **Payment ID:** PAY-HEALTHY-AUTO-EDA8F205B4
+- **Reason:** Payment was debited, but the merchant did not receive it.
+- **Created At:** 2026-10-03T13:35:07.771275Z</blockquote>
+
+        <h3>Tool attempts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attempt</th>
+                    <th>Tool</th>
+                    <th>HTTP status</th>
+                    <th>Response evidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td>1</td>
+                <td>create_payment_dispute</td>
+                <td>201</td>
+                <td><code>{&#x27;complaint_id&#x27;: &#x27;CMP-1317A99AA925&#x27;, &#x27;customer_id&#x27;: &#x27;CUS-501&#x27;, &#x27;payment_id&#x27;: &#x27;PAY-HEALTHY-AUTO-EDA8F205B4&#x27;, &#x27;reason&#x27;: &#x27;Payment was debited, but the merchant did not receive it.&#x27;, &#x27;status&#x27;: &#x27;OPEN&#x27;, &#x27;created_at&#x27;: &#x27;2026-10-03T13:35:07.771275Z&#x27;}</code></td>
+            </tr>
+            
+            </tbody>
+        </table>
+
+        <div class="outcome-grid">
+            <div>
+                <span>Expected effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>Matching effects</span>
+                <strong>1</strong>
+            </div>
+            <div>
+                <span>Related forbidden effects</span>
+                <strong>0</strong>
+            </div>
+            <div>
+                <span>StateAssert check</span>
+                <strong>Confirmed</strong>
+            </div>
+        </div>
+    </section>
+    
+
+<section class="panel warning">
+    <h2>Limitations and honest interpretation</h2>
+    <ul><li>Synthetic sandbox evidence only.</li><li>One saved run per scenario.</li><li>Response check is deterministic, not an AI judge.</li><li>A complete tool trace exposed a timeout clue in one run.</li><li>These results are not customer or market validation.</li></ul>
+</section>
+</main>
+<footer>
+    StateAssert synthetic technical experiment — not customer,
+    production, compliance or market validation.
+</footer>
+</body>
+</html>

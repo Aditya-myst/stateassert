@@ -1,0 +1,40 @@
+{
+  "run_id": "9451F41303",
+  "executed_at": "2026-10-03T13:17:53.919826+00:00",
+  "scenario": "Real agent: HTTP 200 without persistence",
+  "model": "gemini-3.8-flash",
+  "customer_id": "CUS-501",
+  "payment_id": "PAY-AGENT-AUTO-9451F41303",
+  "agent_final_message": "Your payment-dispute complaint has been successfully created.\n\n**Complaint Details:**\n- **Complaint ID:** CMP-D3FB9749E43F\n- **Customer ID:** CUS-501\n- **Payment ID:** PAY-AGENT-AUTO-9451F41303\n- **Reason:** Payment was debited, but the merchant did not receive it\n- **Status:** OPEN\n- **Created At:** 2026-10-03T13:17:51.643443+00:00",
+  "tool_execution": {
+    "tool_name": "create_payment_dispute",
+    "request": {
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-AGENT-AUTO-9451F41303",
+      "reason": "Payment was debited, but the merchant did not receive it"
+    },
+    "http_status": 200,
+    "response": {
+      "complaint_id": "CMP-D3FB9749E43F",
+      "customer_id": "CUS-501",
+      "payment_id": "PAY-AGENT-AUTO-9451F41303",
+      "reason": "Payment was debited, but the merchant did not receive it",
+      "status": "OPEN",
+      "created_at": "2026-10-03T13:17:51.643443+00:00"
+    }
+  },
+  "direct_lookup_status": 404,
+  "verification": {
+    "verdict": "MISSING",
+    "customer_id": "CUS-501",
+    "payment_id": "PAY-AGENT-AUTO-9451F41303",
+    "expected_count": 1,
+    "actual_count": 0,
+    "complaints": []
+  },
+  "comparison": {
+    "response_success_check_passed": true,
+    "tool_status_check_passed": true,
+    "stateassert_detected_failure": true
+  }
+}
